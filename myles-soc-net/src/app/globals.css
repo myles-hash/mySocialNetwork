@@ -4,4 +4,13 @@ header, footer {
     margin: .5rem;
     text-align: center;
     font-weight: bolder;
+    border: 3px solid black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
