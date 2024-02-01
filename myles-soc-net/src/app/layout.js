@@ -1,6 +1,5 @@
 import Link from "next/link";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 
 
 export const metadata = {
@@ -10,15 +9,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
     <html lang="en">
+      <body>
       <header>Social Network</header>
       <nav>
         <Link href ="/">HOME</Link><Link href ="/posts">POSTS</Link>
       </nav>
-      <body>{children}</body>
-      <footer>Social Network</footer>
+        {children}
+        <footer>Property of Myles &copy;</footer>
+        </body>
     </html>
-    </ClerkProvider>
   );
 }

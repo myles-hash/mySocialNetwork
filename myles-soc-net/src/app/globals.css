@@ -1,0 +1,7 @@
+header, footer {
+    background-color: burlywood;
+    padding: .5rem;
+    margin: .5rem;
+    text-align: center;
+    font-weight: bolder;
+}

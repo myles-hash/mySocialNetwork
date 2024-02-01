@@ -1,3 +1,11 @@
+
+
+export const metadata = {
+  title: "Myles Social Network | Home",
+  description: "Home page of the Myles social network",
+};
+
+
 export default function Home() {
   return (
     <div>
