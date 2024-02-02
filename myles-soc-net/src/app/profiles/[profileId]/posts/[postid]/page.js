@@ -6,19 +6,24 @@ import Link from "next/link";
 
 export default async function SinglePost({ params }) {
     const {userId} = auth();
-    
-    
 
-    const post = await sql`SELECT * FROM posts WHERE user_id = ${userId}`;
+    const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
 
-    const comments = await sql`SELECT * FROM comments where user_id = ${userId} ORDER BY id desc`;
+    const profile = await sql`SELECT * FROM profiles WHERE id = ${params.profileId}`;
+
+    const comments = await sql`SELECT * FROM comments where post_id = ${params.postid} ORDER BY id asc`;
+
+    const currentUsername = await sql`SELECT username FROM profiles where clerk_user_id = ${userId} `;
+
+
+    
 
     async function handleAddComment(formData) {
         "use server";
         const username = formData.get("username");
         const content = formData.get("content");
     
-        await sql`INSERT INTO comments (username, content, post_id, user_id) VALUES (${username}, ${content}, ${params.postid}, ${userId})`;
+        await sql`INSERT INTO comments (username, content, post_id, user_id) VALUES (${username}, ${content}, ${params.postid}, ${profile.rows[0].clerk_user_id})`;
         revalidatePath(`/${params.postid}`);
         }
     
@@ -27,11 +32,11 @@ export default async function SinglePost({ params }) {
         <div>
             <h3>{post.rows[0].title}</h3>
             <p>{post.rows[0].content}</p>
-            {userId === post.rows[0].user_id && <Link href={`/profiles/${params.profileId}/posts/${params.postid}/edit`}>Edit</Link>}
+            {userId === post.rows[0].user_id  && <Link href={`/profiles/${params.profileId}/posts/${params.postid}/edit`}>Edit</Link>}
 
         {userId && <form action={handleAddComment}>
             <h4>Add a comment</h4>
-            <input name="username" placeholder="Username" />
+            <input name="username" placeholder="Username" defaultValue={currentUsername.rows[0].username} value={currentUsername.rows[0].username} readOnly/>
              <textarea name="content" placeholder="Content"></textarea>
              <button>Submit</button>
          </form>}

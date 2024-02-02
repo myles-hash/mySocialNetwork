@@ -10,17 +10,30 @@ export default async function Profiles() {
 
    
     return (
-
-        <div>
-        {!userId && <h2>Plese sign up/in to view user profiles</h2>}
-         {profiles.rows.map((profile) => {
-        return (
-          <Link key ={profile.id} href={`/profiles/${profile.id}/posts`}>
+      <div>
+        {!userId && (
+          <div>
+            <h2>Please sign up/in to view user profiles</h2>
+            {profiles.rows.map((profile) => (
+              <div key={profile.id}>
                 <h3>{profile.username}</h3>
                 <p>{profile.bio}</p>
-                </Link>
-        );
-      })}
-        </div> 
+              </div>
+            ))}
+          </div>
+        )}
+    
+        {userId && (
+          <div>
+            {profiles.rows.map((profile) => (
+              <Link key={profile.id} href={`/profiles/${profile.id}/posts`}>
+                <h3>{profile.username}</h3>
+                <p>{profile.bio}</p>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     );
+    
 }

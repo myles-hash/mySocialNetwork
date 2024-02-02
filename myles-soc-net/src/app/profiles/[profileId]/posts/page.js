@@ -12,6 +12,7 @@ export const metadata = {
 
 export default async function ProfilePage({ params }) {
     const {userId} = auth();
+    console.log(params); 
 
 
     const profile = await sql `
@@ -19,7 +20,7 @@ export default async function ProfilePage({ params }) {
     `;
 
     const posts = await sql `
-    SELECT * FROM posts WHERE user_id = ${userId} ORDER BY id desc
+    SELECT * FROM posts WHERE user_id = ${profile.rows[0].clerk_user_id} ORDER BY id desc
     `;
 
     async function handleEditProfile(formData) {
@@ -71,7 +72,7 @@ export default async function ProfilePage({ params }) {
                </form>
                 )}
                  <h1>Posts</h1>
-      {userId && (<form action={handleCreatePost}>
+      {userId === profile.rows[0].clerk_user_id && (<form action={handleCreatePost}>
         <h4>Add a new post</h4>
         <input name="title" placeholder="Post Title" />
         <textarea name="content" placeholder="Post content"></textarea>

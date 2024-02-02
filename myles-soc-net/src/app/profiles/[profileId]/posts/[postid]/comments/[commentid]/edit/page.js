@@ -10,6 +10,8 @@ export default async function EditComment({ params }) {
   const comment =
     await sql`SELECT * FROM comments WHERE id = ${params.commentid}`;
 
+   const profile = await sql`SELECT * FROM profiles WHERE clerk_user_id = ${userId}`;
+
   async function handleEditComment(formData) {
     "use server";
     const username = formData.get("username");
@@ -27,13 +29,14 @@ export default async function EditComment({ params }) {
 
   return (
     <div>
-      <h2>Edit Comment</h2>
       <form action={handleEditComment}>
-        <h3>Add a comment</h3>
+        <h3>Edit Comment</h3>
         <input
           name="username"
           placeholder="Username"
-          defaultValue={comment.rows[0].username}
+          defaultValue={profile.rows[0].username}
+          value={profile.rows[0].username} 
+          readOnly
         />
         <textarea
           name="content"

@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default async function EditPost({ params }) {
   const { userId } = auth();
 
-  const post = await sql`SELECT * FROM posts WHERE user_id = ${userId}`;
+  const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
 
   async function handleEditPost(formData) {
     "use server";
