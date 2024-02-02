@@ -24,3 +24,10 @@ ALTER TABLE comments ADD user_id text;
 UPDATE posts SET user_id = 'user_2bmkAoKOFFLvZ7YfPJAz6NxgnWu';
 
 UPDATE comments SET user_id = 'user_2bmkAoKOFFLvZ7YfPJAz6NxgnWu';
+
+CREATE TABLE profiles (
+id SERIAL PRIMARY KEY,
+clerk_user_id text,
+username text,
+bio text
+);

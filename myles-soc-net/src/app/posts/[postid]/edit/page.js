@@ -1,8 +1,12 @@
+import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+
 export default async function EditPost({ params }) {
+  const { userId } = auth();
+
   const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
 
   async function handleEditPost(formData) {
@@ -16,6 +20,11 @@ export default async function EditPost({ params }) {
     revalidatePath(`/posts/${params.postid}`);
     redirect(`/posts/${params.postid}`);
   }
+
+
+if(userId !== post.rows[0].user_id) {
+  return <p>404 not found</p>
+}
 
   return (
     <div>
