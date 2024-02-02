@@ -2,7 +2,8 @@ import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+
 
 
 export const metadata = {
@@ -19,9 +20,15 @@ export default async function ProfilePage({ params }) {
     SELECT * FROM profiles WHERE id = ${params.profileId}
     `;
 
+    if (profile.rowCount === 0){
+      notFound();
+    }
+
     const posts = await sql `
     SELECT * FROM posts WHERE user_id = ${profile.rows[0].clerk_user_id} ORDER BY id desc
     `;
+
+    
 
     async function handleEditProfile(formData) {
         "use server";
@@ -49,7 +56,9 @@ export default async function ProfilePage({ params }) {
 
     return (
         <div>
+                <p>username:</p>
                 <h1>{profile.rows[0].username}</h1>
+                <p>bio:</p>
                 <h2>{profile.rows[0].bio}</h2>
             
                 
@@ -91,7 +100,11 @@ export default async function ProfilePage({ params }) {
                </div>
     )
 
-
+              
 }
+
+
+
+
 
 

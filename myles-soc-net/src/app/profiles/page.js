@@ -25,6 +25,7 @@ export default async function Profiles() {
     
         {userId && (
           <div>
+            <h1>Profiles</h1>
             {profiles.rows.map((profile) => (
               <Link key={profile.id} href={`/profiles/${profile.id}/posts`}>
                 <h3>{profile.username}</h3>
