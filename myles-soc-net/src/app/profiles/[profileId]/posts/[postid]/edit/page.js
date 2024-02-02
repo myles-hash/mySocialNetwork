@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default async function EditPost({ params }) {
   const { userId } = auth();
 
-  const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
+  const post = await sql`SELECT * FROM posts WHERE user_id = ${userId}`;
 
   async function handleEditPost(formData) {
     "use server";
@@ -15,10 +15,10 @@ export default async function EditPost({ params }) {
     const title = formData.get("title");
     const content = formData.get("content");
 
-    await sql`UPDATE posts SET title = ${title}, content = ${content} WHERE id = ${params.postid}`;
-    revalidatePath(`/posts`);
-    revalidatePath(`/posts/${params.postid}`);
-    redirect(`/posts/${params.postid}`);
+    await sql`UPDATE posts SET title = ${title}, content = ${content} WHERE user_id = ${userId}`;
+    revalidatePath(`/profiles/${params.profileId}/posts/${params.postid}`);
+    revalidatePath(`/profiles/${params.profileId}/posts/${params.postid}/edit`);
+    redirect(`/profiles/${params.profileId}/posts/${params.postid}`);
   }
 
 

@@ -16,12 +16,13 @@ export default async function EditComment({ params }) {
     const content = formData.get("content");
 
     await sql`UPDATE comments SET username = ${username}, content = ${content} WHERE id = ${params.commentid}`;
-    revalidatePath(`/posts/${params.postid}`);
-    redirect(`/posts/${params.postid}`);
+    revalidatePath(`/profiles/${params.profileId}/posts/${params.postid}/comments/${params.commentid}/edit`);
+    revalidatePath(`/profiles/${params.profileId}/posts/${params.postid}`);
+    redirect(`/profiles/${params.profileId}/posts/${params.postid}`);
   }
   
   if(userId !== comment.rows[0].user_id) {
-    return <p>404 not found</p>
+   return <p>404 not found</p>
   }
 
   return (

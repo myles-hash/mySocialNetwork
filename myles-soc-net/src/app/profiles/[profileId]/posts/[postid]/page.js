@@ -6,9 +6,12 @@ import Link from "next/link";
 
 export default async function SinglePost({ params }) {
     const {userId} = auth();
+    
+    
 
-    const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
-    const comments = await sql`SELECT * FROM comments where post_id = ${params.postid} ORDER BY id desc`;
+    const post = await sql`SELECT * FROM posts WHERE user_id = ${userId}`;
+
+    const comments = await sql`SELECT * FROM comments where user_id = ${userId} ORDER BY id desc`;
 
     async function handleAddComment(formData) {
         "use server";
@@ -16,14 +19,15 @@ export default async function SinglePost({ params }) {
         const content = formData.get("content");
     
         await sql`INSERT INTO comments (username, content, post_id, user_id) VALUES (${username}, ${content}, ${params.postid}, ${userId})`;
-        revalidatePath(`/posts/${params.postid}`);
+        revalidatePath(`/${params.postid}`);
         }
     
+  
     return (
         <div>
             <h3>{post.rows[0].title}</h3>
             <p>{post.rows[0].content}</p>
-            {userId === post.rows[0].user_id && <Link href={`/posts/${params.postid}/edit`}>Edit</Link>}
+            {userId === post.rows[0].user_id && <Link href={`/profiles/${params.profileId}/posts/${params.postid}/edit`}>Edit</Link>}
 
         {userId && <form action={handleAddComment}>
             <h4>Add a comment</h4>
@@ -38,7 +42,7 @@ export default async function SinglePost({ params }) {
           <div key={comment.id}>
             <h3>{comment.username}</h3>
             <p>{comment.content}</p>
-            {userId === comment.user_id && <Link href={`/posts/${params.postid}/comments/${comment.id}/edit `}>
+            {userId === comment.user_id && <Link href={`/profiles/${params.profileId}/posts/${params.postid}/comments/${comments.rows[0].id}/edit`}>
               Edit
             </Link>}
           </div>

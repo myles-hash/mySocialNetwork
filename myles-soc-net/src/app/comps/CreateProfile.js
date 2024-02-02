@@ -20,8 +20,8 @@ export default function CreateProfile() {
     <div>
       <h2>Create Profile</h2>
       <form action={addNewProfile}>
-        <input name="username" placeholder="Username" />
-        <textarea name="bio" placeholder="Bio"></textarea>
+        <input name="username" placeholder="Username" required/>
+        <textarea name="bio" placeholder="Bio" required></textarea>
         <button>Submit</button>
       </form>
     </div>

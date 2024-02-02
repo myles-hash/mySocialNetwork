@@ -25,7 +25,7 @@ export default async function RootLayout({ children }) {
         <body>
         <header>Social Network</header>
         <nav>
-     <Link href ="/">HOME</Link> | <Link href ="/about">ABOUT</Link> | <Link href ="/posts">POSTS</Link>
+     <Link href ="/">HOME</Link> | <Link href ="/about">ABOUT</Link> | <Link href="/profiles">PROFILES</Link>
    </nav>
         {!userId && <div><Link href="/sign-in">Sign In</Link>{children}</div>}
         {userId && <UserButton afterSignOutUrl="/" />}
