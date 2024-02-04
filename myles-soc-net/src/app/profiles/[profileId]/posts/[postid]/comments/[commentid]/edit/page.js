@@ -1,3 +1,4 @@
+import EditCommentBtn from "@/app/comps/EditCommentBtn";
 import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
@@ -43,7 +44,7 @@ export default async function EditComment({ params }) {
           placeholder="Content"
           defaultValue={comment.rows[0].content}
         ></textarea>
-        <button>Submit</button>
+        <EditCommentBtn />
       </form>
     </div>
   );

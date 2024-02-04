@@ -1,3 +1,5 @@
+import CreatePostBtn from "@/app/comps/CreatePostBtn";
+import EditProfileBtn from "@/app/comps/EditProfileBtn";
 import ScrollAreaDemo from "@/app/comps/RadixScroll";
 import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
@@ -78,7 +80,7 @@ export default async function ProfilePage({ params }) {
                    defaultValue={profile.rows[0].bio}
                    required
                  ></textarea>
-                 <button>Submit</button>
+                 <EditProfileBtn />
                </form>
                </div>
                 )}
@@ -88,7 +90,7 @@ export default async function ProfilePage({ params }) {
         <h4>Add a new post</h4>
         <input name="title" placeholder="Post Title" />
         <textarea name="content" placeholder="Post content" ></textarea>
-        <button >Submit</button>
+        <CreatePostBtn />
       </form>)}
       {!userId && <div><h2>Please... Sign in to add posts</h2></div>}
      

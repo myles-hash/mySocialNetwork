@@ -1,3 +1,4 @@
+import CreateCommentBtn from "@/app/comps/CreateCommentBtn";
 import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
@@ -37,7 +38,7 @@ export default async function SinglePost({ params }) {
             <h4>Add a comment</h4>
             <input name="username" placeholder="Username" defaultValue={currentUsername.rows[0].username} value={currentUsername.rows[0].username} readOnly/>
              <textarea name="content" placeholder="Content"></textarea>
-             <button>Submit</button>
+             <CreateCommentBtn />
          </form>}
          {!userId && <h2>Please sign in to add comments</h2>}
 
