@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 export default async function EditPost({ params }) {
   const { userId } = auth();
 
+
   const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
 
   async function handleEditPost(formData) {
@@ -28,9 +29,9 @@ if(userId !== post.rows[0].user_id) {
 
   return (
     <div>
-      <h2>Edit - {post.rows[0].title}</h2>
+      <h2>Edit Post</h2>
       <form action={handleEditPost}>
-        <h4>Add a new post</h4>
+        <h4>Edit - {post.rows[0].title}</h4>
         <input
           name="title"
           placeholder="Post Title"

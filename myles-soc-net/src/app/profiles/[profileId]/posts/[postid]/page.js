@@ -9,7 +9,6 @@ export default async function SinglePost({ params }) {
 
     const post = await sql`SELECT * FROM posts WHERE id = ${params.postid}`;
 
-    const profile = await sql`SELECT * FROM profiles WHERE id = ${params.profileId}`;
 
     const comments = await sql`SELECT * FROM comments where post_id = ${params.postid} ORDER BY id asc`;
 
@@ -23,7 +22,7 @@ export default async function SinglePost({ params }) {
         const username = formData.get("username");
         const content = formData.get("content");
     
-        await sql`INSERT INTO comments (username, content, post_id, user_id) VALUES (${username}, ${content}, ${params.postid}, ${profile.rows[0].clerk_user_id})`;
+        await sql`INSERT INTO comments (username, content, post_id, user_id) VALUES (${username}, ${content}, ${params.postid}, ${userId})`;
         revalidatePath(`/${params.postid}`);
         }
     
@@ -47,9 +46,10 @@ export default async function SinglePost({ params }) {
           <div key={comment.id}>
             <h3>{comment.username}</h3>
             <p>{comment.content}</p>
-            {userId === comment.user_id && <Link href={`/profiles/${params.profileId}/posts/${params.postid}/comments/${comments.rows[0].id}/edit`}>
+            <p>
+            {userId === comment.user_id && <Link href={`/profiles/${params.profileId}/posts/${params.postid}/comments/${comment.id}/edit`}>
               Edit
-            </Link>}
+            </Link>}</p>
           </div>
         );
       })}

@@ -13,11 +13,12 @@ export default async function Profiles() {
       <div>
         {!userId && (
           <div>
-            <h2>Please sign up/in to view user profiles</h2>
+            <h2>Please sign up/in to view user's posts</h2>
             {profiles.rows.map((profile) => (
               <div key={profile.id}>
                 <h3>{profile.username}</h3>
                 <p>{profile.bio}</p>
+                <br/>
               </div>
             ))}
           </div>

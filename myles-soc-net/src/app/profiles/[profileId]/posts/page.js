@@ -1,3 +1,4 @@
+import ScrollAreaDemo from "@/app/comps/RadixScroll";
 import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
@@ -13,7 +14,6 @@ export const metadata = {
 
 export default async function ProfilePage({ params }) {
     const {userId} = auth();
-    console.log(params); 
 
 
     const profile = await sql `
@@ -52,7 +52,8 @@ export default async function ProfilePage({ params }) {
 
         revalidatePath(`/profiles/${params.profileId}/posts`);
     }
-     
+
+
 
     return (
         <div>
@@ -63,11 +64,12 @@ export default async function ProfilePage({ params }) {
             
                 
                 {userId === profile.rows[0].clerk_user_id && (
+                <div>
               <form action={handleEditProfile}>
                  <h4>Edit profile</h4>
                  <input
                    name="username"
-                   placeholder="Usernmae"
+                   placeholder="Username"
                    defaultValue={profile.rows[0].username}
                    required
                  />
@@ -79,24 +81,26 @@ export default async function ProfilePage({ params }) {
                  ></textarea>
                  <button>Submit</button>
                </form>
+               </div>
                 )}
-                 <h1>Posts</h1>
+                
+                 <h1>{profile.rows[0].username}'s Posts</h1>
       {userId === profile.rows[0].clerk_user_id && (<form action={handleCreatePost}>
         <h4>Add a new post</h4>
         <input name="title" placeholder="Post Title" />
-        <textarea name="content" placeholder="Post content"></textarea>
-        <button>Submit</button>
+        <textarea name="content" placeholder="Post content" ></textarea>
+        <button >Submit</button>
       </form>)}
       {!userId && <div><h2>Please... Sign in to add posts</h2></div>}
-
-
-        {posts.rows.map((post) => {
+     
+        {/* {posts.rows.map((post) => {
             return (
               <Link key ={post.id} href={`/profiles/${params.profileId}/posts/${post.id}`}>
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>
                 </Link>
-            )})}
+            )})} */}
+            <ScrollAreaDemo posts={posts} profileId={params.profileId}/>
                </div>
     )
 
