@@ -13,7 +13,7 @@ const ScrollAreaDemo = ({posts, profileId}) => (
       <div style={{ padding: '15px 20px' }}>
         {posts.rows.map((post) => {
             return (
-                <ul>
+                <ul key ={post.id}>
               <li key ={post.id}><Link key ={post.id} href={`/profiles/${profileId}/posts/${post.id}`}>
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>

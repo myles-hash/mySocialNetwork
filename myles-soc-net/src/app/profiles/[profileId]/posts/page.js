@@ -2,7 +2,6 @@ import ScrollAreaDemo from "@/app/comps/RadixScroll";
 import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 
@@ -93,13 +92,6 @@ export default async function ProfilePage({ params }) {
       </form>)}
       {!userId && <div><h2>Please... Sign in to add posts</h2></div>}
      
-        {/* {posts.rows.map((post) => {
-            return (
-              <Link key ={post.id} href={`/profiles/${params.profileId}/posts/${post.id}`}>
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
-                </Link>
-            )})} */}
             <ScrollAreaDemo posts={posts} profileId={params.profileId}/>
                </div>
     )
