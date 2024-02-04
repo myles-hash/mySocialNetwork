@@ -83,7 +83,7 @@ export default async function ProfilePage({ params }) {
                </div>
                 )}
                 
-                 <h1>Posts by{profile.rows[0].username}</h1>
+                 <h1>Posts by {profile.rows[0].username}</h1>
       {userId === profile.rows[0].clerk_user_id && (<form action={handleCreatePost}>
         <h4>Add a new post</h4>
         <input name="title" placeholder="Post Title" />
