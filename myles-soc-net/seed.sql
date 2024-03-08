@@ -34,15 +34,3 @@ username text,
 bio text
 );
 
-CREATE TABLE reviews (
-id SERIAL PRIMARY KEY,
-album_id text,
-album_image_url text,
-album_name text,
-spotify_link text,
-album_artist text,
-album_score text,
-album_review text,
-fav_track text,
-user_id text
-);
